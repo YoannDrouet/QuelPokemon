@@ -14,19 +14,17 @@ public class Dresseur {
     private String nom;
     private Pokemon[] pokemons;
 
-    private int nbPokemons = 0;
-
     public Dresseur(String nom) {
         this.nom = nom;
         pokemons = new Pokemon[6];
     }
 
     public void afficher(){
-        if (nbPokemons == 0){
+        if (this.nbPokemons() == 0){
             System.out.printf("Le dresseur %s ne possède pas encore de pokemon%n", this.nom);
         }else {
-            System.out.printf("Le dresseur %s possède %d pokemon(s) :%n", this.nom, this.nbPokemons);
-            for (int i = 0; i < this.nbPokemons; i++) {
+            System.out.printf("Le dresseur %s possède %d pokemon(s) :%n", this.nom, this.nbPokemons());
+            for (int i = 0; i < this.nbPokemons(); i++) {
                 System.out.printf(" - ");
                 pokemons[i].afficher();
             }
@@ -50,18 +48,31 @@ public class Dresseur {
     }
 
     /**
+     * Compte le nombre de pokemon de l'instance de dresseur
+     * @return le total de pokemon
+     */
+    public int nbPokemons(){
+        int nb = 0;
+        for (int i = 0; i < pokemons.length; i++) {
+            if (pokemons[i] != null){
+                nb++;
+            }
+        }
+        return nb;
+    }
+
+    /**
      * Commence par vérifier que cette instance de dresseur à moins de 6 pokemons.
      * Permet ensuite de rajouter le pokemon en paramètre dans le tableau de pokemons.
      * Incrémente ensuite le nombre de pokémon
      * @param pokemon
      */
     public void capture(Pokemon pokemon){
-        if (nbPokemons<6){
+        if (this.nbPokemons()<6){
             for (int i = 0; i < pokemons.length; i++) {
                 if (pokemons[i] == null){
                     pokemons[i] = pokemon;
                     pokemon.setDresseur(this);
-                    nbPokemons ++;
                     break;
                 }
             }
@@ -77,12 +88,11 @@ public class Dresseur {
      * @param pokemon
      */
     public void supprimerPokemon(Pokemon pokemon) {
-        if (nbPokemons>0){
+        if (this.nbPokemons()>0){
             for (int i = 0; i < pokemons.length; i++) {
                 if (pokemons[i].compareTo(pokemon)){
                     pokemons[i].supprimerDresseur();
                     pokemons[i] = null;
-                    nbPokemons --;
                     break;
                 }
             }
@@ -120,7 +130,7 @@ public class Dresseur {
      * @return true si le pokemon existe, false sinon
      */
     public boolean verification(Pokemon p){
-        if (nbPokemons>0){
+        if (this.nbPokemons()>0){
             for (int i = 0; i < pokemons.length; i++) {
                 if (pokemons[i].compareTo(p)){
                     return true;
