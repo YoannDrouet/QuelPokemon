@@ -6,6 +6,7 @@ package fr.eni.quelPokemon.bo;
  *     <li><b>nom :</b> Le nom de l'attaque</li>
  *     <li><b>degats :</b> Le nombre de points de dégats infligés par cette attaque</li>
  * </ul>
+ * @author Yoann Drouet
  */
 public class Attaque {
     private String nom;

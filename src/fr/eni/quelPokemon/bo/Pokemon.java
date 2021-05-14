@@ -2,6 +2,19 @@ package fr.eni.quelPokemon.bo;
 
 import java.util.Random;
 
+/**
+ * Classe Pokemon
+ * <ul>
+ *     <li><b>nom :</b> Le nom du pokemon</li>
+ *     <li><b>tailles :</b> La taille du pokemon en centimètre</li>
+ *     <li><b>poids :</b> le poids du pokemon en gramme</li>
+ *     <li><b>pv :</b> Les points de vie du pokemon</li>
+ *     <li><b>attaque01 :</b> La première attaque du pokemon</li>
+ *     <li><b>attaque02 :</b> La deuxième attaque du pokemon</li>
+ *     <li><b>dresseur :</b> Le dresseur de ce pokemon</li>
+ * </ul>
+ * @author Yoann Drouet
+ */
 public class Pokemon {
     private String nom;
     private int tailles;

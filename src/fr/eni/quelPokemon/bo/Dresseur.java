@@ -6,9 +6,7 @@ package fr.eni.quelPokemon.bo;
  *     <li><b>nom :</b> Le nom du dresseur</li>
  *     <li><b>pokemons :</b> Le tableau de pokemons qu'il possède, limité à 6</li>
  * </ul>
- * <ul>
- *     <li><b>nbPokemons :</b> Le nombre de pokemon que possède le dresseur</li>
- * </ul>
+ * @author Yoann Drouet
  */
 public class Dresseur {
     private String nom;
