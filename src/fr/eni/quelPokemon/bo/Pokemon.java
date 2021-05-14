@@ -137,7 +137,7 @@ public class Pokemon {
                 p.attaque(this);
             }
         }while (p.getCopiePV() > 0 && this.getCopiePV() >0);
-        if (p.getCopiePV() > 0) {
+        if (p.getCopiePV() <= 0) {
             System.out.printf("%s est KO%n%s à gagné", p.getNom(), this.getNom());
         }else{
             System.out.printf("%s est KO%n%s à gagné", this.getNom(), p.getNom());
