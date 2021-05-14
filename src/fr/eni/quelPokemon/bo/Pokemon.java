@@ -131,7 +131,7 @@ public class Pokemon {
     }
 
     public void afficher() {
-        System.out.printf("%s (%s) ayant %dpv qui connait :%n    ", this.nom, this.dresseur.getNom(), this.pv);
+        System.out.printf("%s (%dpv) qui connait :%n    ", this.nom, this.pv);
         attaque01.afficher();
         System.out.printf("    ");
         attaque02.afficher();
