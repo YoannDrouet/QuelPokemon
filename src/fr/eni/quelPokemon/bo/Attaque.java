@@ -11,9 +11,11 @@ package fr.eni.quelPokemon.bo;
 public class Attaque {
     private String nom;
     private int degats;
+    private Type type;
 
-    public Attaque(String nom, int degats) {
+    public Attaque(String nom, Type type, int degats) {
         this.nom = nom;
+        this.type = type;
         this.degats = degats;
     }
 
@@ -21,12 +23,20 @@ public class Attaque {
         System.out.printf("%s - %d points de dégats%n", this.nom, this.degats);
     }
 
+    public void afficherFort(){
+        System.out.printf("%s - %d points de dégats%n", this.nom, this.degats*2);
+    }
+
+    public void afficherFaible(){
+        System.out.printf("%s - %d points de dégats%n", this.nom, this.degats/2);
+    }
+
     public String getNom() {
         return nom;
     }
 
-    public void setNom(String nom) {
-        this.nom = nom;
+    public Type getType() {
+        return type;
     }
 
     public int getDegats() {

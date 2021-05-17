@@ -9,92 +9,59 @@ import java.util.Random;
  *     <li><b>tailles :</b> La taille du pokemon en centimètre</li>
  *     <li><b>poids :</b> le poids du pokemon en gramme</li>
  *     <li><b>pv :</b> Les points de vie du pokemon</li>
+ *     <li><b>type :</b> Le type du pokemon/li>
  *     <li><b>attaque01 :</b> La première attaque du pokemon</li>
  *     <li><b>attaque02 :</b> La deuxième attaque du pokemon</li>
  *     <li><b>dresseur :</b> Le dresseur de ce pokemon</li>
  * </ul>
  * @author Yoann Drouet
  */
-public class Pokemon {
+public class Pokemon{
     private String nom;
     private int tailles;
     private int poids;
     private int pv;
+    private Type type;
     private Attaque attaque01;
     private Attaque attaque02;
     private Dresseur dresseur;
 
-    private int copiePV;
+    private int pvRestants;
 
-    public Pokemon(String nom, int tailles, int poids, int pv, Attaque attaque01, Attaque attaque02) {
+    public Pokemon(String nom, int tailles, int poids, int pv, Type type, Attaque attaque01, Attaque attaque02) {
         this.nom = nom;
         this.tailles = tailles;
         this.poids = poids;
         this.pv = pv;
+        this.type = type;
         this.attaque01 = attaque01;
         this.attaque02 = attaque02;
 
-        this.copiePV = pv;
+        this.pvRestants = pv;
     }
 
     public String getNom() {
         return nom;
     }
 
-    public void setNom(String nom) {
-        this.nom = nom;
-    }
-
     public int getTailles() {
         return tailles;
-    }
-
-    public void setTailles(int tailles) {
-        this.tailles = tailles;
     }
 
     public int getPoids() {
         return poids;
     }
 
-    public void setPoids(int poids) {
-        this.poids = poids;
-    }
-
     public int getPv() {
         return pv;
     }
 
-    public void setPv(int pv) {
-        this.pv = pv;
+    public int getPvRestants() {
+        return pvRestants;
     }
 
-    public Attaque getAttaque01() {
-        return attaque01;
-    }
-
-    public void setAttaque01(Attaque attaque01) {
-        this.attaque01 = attaque01;
-    }
-
-    public Attaque getAttaque02() {
-        return attaque02;
-    }
-
-    public void setAttaque02(Attaque attaque02) {
-        this.attaque02 = attaque02;
-    }
-
-    public Dresseur getDresseur() {
-        return dresseur;
-    }
-
-    public int getCopiePV() {
-        return copiePV;
-    }
-
-    public void setCopiePV(int copiePV) {
-        this.copiePV = copiePV;
+    public void setPvRestants(int pvRestants) {
+        this.pvRestants = pvRestants;
     }
 
     public void setDresseur(Dresseur dresseur) {
@@ -105,6 +72,10 @@ public class Pokemon {
             this.dresseur.supprimerPokemon(this);
             this.dresseur = dresseur;
         }
+    }
+
+    public Type getType() {
+        return type;
     }
 
     /**
@@ -146,11 +117,11 @@ public class Pokemon {
         do {
             this.attaque(p);
 
-            if (p.getCopiePV()>0){
+            if (p.getPvRestants()>0){
                 p.attaque(this);
             }
-        }while (p.getCopiePV() > 0 && this.getCopiePV() >0);
-        if (p.getCopiePV() <= 0) {
+        }while (p.getPvRestants() > 0 && this.getPvRestants() >0);
+        if (p.getPvRestants() <= 0) {
             System.out.printf("%s est KO%n%s à gagné", p.getNom(), this.getNom());
         }else{
             System.out.printf("%s est KO%n%s à gagné", this.getNom(), p.getNom());
@@ -174,29 +145,42 @@ public class Pokemon {
     private void attaque(Pokemon p) {
         Random rd = new Random();
         int proba = rd.nextInt(11);
-        if ((this.copiePV/this.pv*100)>25){
+        int frappe = rd.nextInt(101);
+        int coupCritique = 1;
+        if(frappe>=85){
+            coupCritique =2;
+        }
+        float multiplicateur;
+        System.out.printf("%s utilise ",this.nom);
+        if ((this.pvRestants /this.pv*100)>25){
+            if(frappe<10){
+                coupCritique =0;
+            }
             if (proba<=9){
-                System.out.printf("%s utilise ",this.nom);
-                attaque01.afficher();
-                p.setCopiePV((p.getCopiePV()-attaque01.getDegats()));
+                multiplicateur = attaque01.getType().multiplicateurDegats(attaque01, p);
+                p.setPvRestants((int)(p.getPvRestants()-(attaque01.getDegats()*multiplicateur*coupCritique)));
             }else {
-                System.out.printf("%s utilise ",this.nom);
-                attaque02.afficher();
-                p.setCopiePV((p.getCopiePV()-attaque02.getDegats()));
+                multiplicateur = attaque02.getType().multiplicateurDegats(attaque02, p);
+                p.setPvRestants((int)(p.getPvRestants()-(attaque02.getDegats()*multiplicateur*coupCritique)));
             }
         } else{
+            if(frappe<25){
+                coupCritique =0;
+            }
             if (proba>=5){
-                System.out.printf("%s utilise ",this.nom);
-                attaque02.afficher();
-                p.setCopiePV((p.getCopiePV()-attaque02.getDegats()));
+                multiplicateur = attaque01.getType().multiplicateurDegats(attaque01, p);
+                p.setPvRestants((int)(p.getPvRestants()-(attaque01.getDegats()*multiplicateur*coupCritique)));
             }else {
-                System.out.printf("%s utilise ",this.nom);
-                attaque01.afficher();
-                p.setCopiePV((p.getCopiePV()-attaque01.getDegats()));
+                multiplicateur = attaque02.getType().multiplicateurDegats(attaque02,p);
+                p.setPvRestants((int)(p.getPvRestants()-(attaque02.getDegats()*multiplicateur*coupCritique)));
             }
         }
-        if (p.getCopiePV()>0){
-            System.out.printf("Il reste %dpv à %s%n", p.getCopiePV(),p.getNom());
+        if (p.getPvRestants()>0){
+            System.out.printf("Il reste %dpv à %s%n", p.getPvRestants(),p.getNom());
         }
+    }
+
+    public void soignerPokemon(){
+        this.pvRestants = this.pv;
     }
 }
