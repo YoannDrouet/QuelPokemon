@@ -25,17 +25,17 @@ public class Main {
         Attaque statik = new Attaque("Statik", electrique,20);
         Attaque paratonnerre = new Attaque("Paratonnerre",electrique,75);
 
-        Pokemon pikachu = new Pokemon("Pikachu",40,6000,120,electrique, statik,paratonnerre);
+        Pokemon pikachu = new Pokemon("Pikachu",40,6000,120,5,electrique, statik,paratonnerre);
 
         Attaque fouetLiane = new Attaque("Fouet Liane", plante,20);
         Attaque tranchHerb = new Attaque("Tranch' Herbe",plante,75);
 
-        Pokemon bulbizard = new Pokemon("Bulbizard",60,7500,120,plante, fouetLiane,tranchHerb);
+        Pokemon bulbizard = new Pokemon("Bulbizard",60,7500,120,5,plante, fouetLiane,tranchHerb);
 
         Attaque crocFeu = new Attaque("Croc Feu",feu,30);
         Attaque lanceFlammes = new Attaque("Lance Flammes", feu,85);
 
-        Pokemon dracaufeu = new Pokemon("Dracaufeu",250, 50000, 230, feu, crocFeu, lanceFlammes);
+        Pokemon dracaufeu = new Pokemon("Dracaufeu",250, 50000, 230,34, feu, crocFeu, lanceFlammes);
 
         sacha.capture(pikachu);
         sacha.capture(bulbizard);
@@ -49,6 +49,6 @@ public class Main {
         //sacha.afficher();
         //ondine.afficher();
 
-        dracaufeu.combat(bulbizard);
+        dracaufeu.combat(pikachu);
     }
 }

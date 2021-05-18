@@ -23,12 +23,19 @@ public class Attaque {
         System.out.printf("%s - %d points de dégats%n", this.nom, this.degats);
     }
 
-    public void afficherFort(){
-        System.out.printf("%s - %d points de dégats%n", this.nom, this.degats*2);
-    }
-
-    public void afficherFaible(){
-        System.out.printf("%s - %d points de dégats%n", this.nom, this.degats/2);
+    /**
+     * Permet de formater l'affichage de l'attaque en fonction des coups critiques et des avantages de types
+     * @param coupCritique
+     * @param multiplicateur
+     */
+    public void afficherType(float coupCritique, float multiplicateur){
+        if (coupCritique == 1.5){
+            System.out.printf("%s (Coup critique !) - %.0f points de dégats%n", this.nom, this.degats*multiplicateur*coupCritique);
+        }else if (coupCritique == 0){
+            System.out.printf("%s et rate son attaque%n", this.nom);
+        }else {
+            System.out.printf("%s - %.0f points de dégats%n", this.nom, this.degats*multiplicateur);
+        }
     }
 
     public String getNom() {
@@ -41,9 +48,5 @@ public class Attaque {
 
     public int getDegats() {
         return degats;
-    }
-
-    public void setDegats(int degats) {
-        this.degats = degats;
     }
 }
